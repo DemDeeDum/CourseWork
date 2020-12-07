@@ -10,20 +10,23 @@
 
 <p class="text-success m-3">@ViewBag.StatusMessage</p>
 <article class="d-flex justify-content-end">
-    <div class="text-center p-3 settings m-3 mr-4 pb-4">
+    <div class="p-3 settings m-3 mr-4 pb-4">
         <div>
-            Password:
+            <div>
+                Password:
 
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Set password", "SetPassword")
-            }
-            Name:
-
+                @if (Model.HasPassword)
+                {
+                    @Html.ActionLink("Change password", "ChangePassword")
+                }
+                else
+                {
+                    @Html.ActionLink("Set password", "SetPassword")
+                }
+            </div>
+            <div>
+                Name:
+            </div>
 
         </div>
     </div>

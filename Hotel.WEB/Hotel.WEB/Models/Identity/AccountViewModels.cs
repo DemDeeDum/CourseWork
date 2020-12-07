@@ -63,17 +63,23 @@ namespace Hotel.WEB.Models.Identity
 
     public class RegisterViewModel
     {
+        [Required]
         [StringLength(50, ErrorMessage = "Enter into {0} between {2} and {1} letters", MinimumLength = 2)]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
+
+        [Required]
+        [EmailAddress]
         [Display(Name = "Email address")]
         public string Email { get; set; }
 
+        [Required]
         [StringLength(100, ErrorMessage = "Enter into {0} between {2} and {1} letters", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
 
+        [Required]
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "Password and its comfirming are not equal.")]

@@ -33,7 +33,6 @@ namespace Hotel.WEB
             Mapper.Initialize(x => x.AddProfile<HotelMapper>());
 
             Destroyer destroyer = new Destroyer();
-
         }
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using Hotel.WEB.Models.Booking;
 
@@ -20,13 +18,14 @@ namespace Hotel.WEB.App_Code
             article.AddCssClass(styleToRoomContainer);
             var spanGeneralInfo = new TagBuilder("span");
             spanGeneralInfo.AddCssClass(styleToRoomInfo);
-;
+
             foreach(var room in rooms) //just filling by info
             {
                 var submit = new TagBuilder("a");
                 submit.MergeAttribute("href", string.Format("/Booking/BookingRoom/{0}/?start={1}" +
                     "&finish={2}",
                     room.Id, start, finish));
+                
                 var spanClass = new TagBuilder("span");
                 spanClass.AddCssClass(styleToRoomClass);
                 spanClass.MergeAttribute("style", $"color: {room.ClassDisplayColor};");

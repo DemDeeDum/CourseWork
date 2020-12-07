@@ -65,5 +65,8 @@
     fill: red;
 }
 
+.user-management-list-field {
+    overflow: auto;
+}
 
 

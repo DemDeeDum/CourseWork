@@ -132,43 +132,11 @@ namespace Hotel.WEB.Controllers
             return page;
         }
 
-        [HttpPost]
-        public ActionResult Search(FormCollection items,
-            DateTime searchbegindate, DateTime searchfinishdate)
-        {
-            SearchSettings settings = new SearchSettings()
-            {
-                BeginningTime = DateTime.Today.AddDays(10),
-                EndingTime = DateTime.Today.AddDays(20)
-            };
-            var errorList = ValidateDates(searchbegindate, searchfinishdate);
-
-            if (errorList.Count == 0)//getting filters
-            {
-                settings.PriceFilter = items["pricef"] == "true,false";
-                settings.PeopleFilter = items["peoplecountf"] == "true,false";
-                settings.RoomClassFilter = items["classf"] == "true,false";
-                settings.StatusFilter = items["statusf"] == "true,false";
-                settings.Descending = items["descendingf"] == "true,false";
-                settings.BeginningTime = searchbegindate;
-                settings.EndingTime = searchfinishdate;
-            }
-            else
-                ViewBag.Errors = errorList;
-            var page = PageCreator(1, settings);
-
-
-            if (page.PageNumber == -1)
-                return RedirectToAction("ErrorPage", "Public");
-
-            return View("~/Views/Booking/BookingPage.cshtml", page);
-        }
-
         [HttpGet]
         public ActionResult BookingPage(bool? PeopleFilter, bool? RoomClassFilter,
         bool? PriceFilter, bool? StatusFilter, bool? Descending, string BeginningTime,
         string EndingTime, int id = 1, bool booked = false, int roomNumber = 1)
-        {
+            {
            
             var page = PageCreator(id, SettingsCreator(PeopleFilter, RoomClassFilter,
         PriceFilter, StatusFilter, Descending, BeginningTime,
@@ -250,7 +218,7 @@ namespace Hotel.WEB.Controllers
 
         [Authorize(Roles = "user")]
         [HttpPost]
-        public ActionResult BookingRoom(int? id, string start, string finish, bool different = true)
+        public ActionResult BookingRoom(int? id, string start, string finish, int roomNumber, bool different = true)
         {
             if (!(start is null) && DateTime.TryParse(start, out DateTime startDate)
                 && !(finish is null) && DateTime.TryParse(finish, out DateTime finishDate)
@@ -260,17 +228,22 @@ namespace Hotel.WEB.Controllers
                 if (errorList.Count > 0)
                 {
                     ViewBag.Errors = errorList;
-                    ViewBag.StartDate = startDate;
-                    ViewBag.FinishDate = finishDate;
-                    ViewBag.Status = BookingService.GetRoomStatus(id.Value, startDate, finishDate);
-                    return View(Mapper.Map<RoomWholeInfo, RoomWholeInformationViewModel>(BookingService.GetCertainRoom(id.Value)));
+                }
+                else
+                {
+                    BookingService.CreateBooking(User.Identity.GetUserId(), id.Value,
+     startDate, finishDate);
+
+                    ViewBag.Message = $"Room №{roomNumber} was booked!";
                 }
 
-                BookingService.CreateBooking(User.Identity.GetUserId(), id.Value,
-                startDate, finishDate);
-            return Redirect($"/Booking/BookingPage/1/?booked=true" +
-                        $"&roomNumber={BookingService.GetCertainRoom(id.Value).Number}");
+                ViewBag.StartDate = startDate;
+                ViewBag.FinishDate = finishDate;
+                ViewBag.Status = BookingService.GetRoomStatus(id.Value, startDate, finishDate);
+
+                return View(Mapper.Map<RoomWholeInfo, RoomWholeInformationViewModel>(BookingService.GetCertainRoom(id.Value)));
             }
+
             return Redirect("/Booking/BookingPage");
         }
 

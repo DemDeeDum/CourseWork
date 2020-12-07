@@ -7,7 +7,6 @@
 @using Hotel.WEB.Models.Booking;
 @model Page<RoomViewModel, RequestViewModel>
 
-
 <article class="top-menu text-center p-1 page-header" id="booking-page">
     Fill the form or select fit room below
 </article>
@@ -33,7 +32,7 @@
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.InputModel.RoomClassName,
                    Model.InputModel.RoomClassNames,
-                   "Select people count",
+                   "Select room class",
                    new { @class = "form-control ", required = "" })
                 </div>
             </div>
@@ -44,7 +43,7 @@
                 <div class="col-md-10">
                     @Html.DropDownListFor(model => model.InputModel.PeopleCount,
                      Model.InputModel.PossiblePeopleCounts.ToList(),
-                     "Select room class",
+                     "Select people count",
                      new { @class = "form-control ", required = "" })
 
                 </div>
@@ -84,7 +83,7 @@
 </article>
 <hr />
 <article>
-    @using (Html.BeginForm("Search", "Booking", FormMethod.Post
+    @using (Html.BeginForm("BookingPage", "Booking", FormMethod.Get
     , new { @class = "d-lg-flex justify-content-center" }))
     {
         <section class="mr-5">
@@ -103,13 +102,13 @@
             <div class="d-lg-flex justify-content-between">
                 <div class="d-flex flex-column mr-3">
                     @Html.Label("Beginning")
-                    <input type="date" id="searchbegindate" name="searchbegindate" required
+                    <input type="date" id="searchbegindate" name="@nameof(Model.SearchInfo.BeginningTime)" required
                            value=@Html.CreateDateString(Model.SearchInfo.BeginningTime) />
                 </div>
                 <div class="d-flex flex-column">
                     @Html.Label("Ending")
-                    <input type="date" id="searchfinishdate" name="searchfinishdate"
-                           value=@Html.CreateDateString(Model.SearchInfo.EndingTime) required />
+                    <input type="date" id="searchfinishdate" name="@nameof(Model.SearchInfo.EndingTime)"
+                           value=@Html.CreateDateString(Model.SearchInfo.EndingTime) />
                 </div>
             </div>
 
@@ -127,25 +126,25 @@
                     <h3>Sort by</h3>
                 </div>
                 <div class="form-group">
-                    @Html.CheckBox("descendingf", Model.SearchInfo.Descending)
+                    @Html.CheckBox(nameof(Model.SearchInfo.Descending), Model.SearchInfo.Descending)
                     @Html.Label("Descending")
                 </div>
             </div>
             <div>
                 <div class="form-group">
-                    @Html.CheckBox("pricef", Model.SearchInfo.PriceFilter)
+                    @Html.CheckBox(nameof(Model.SearchInfo.PriceFilter), Model.SearchInfo.PriceFilter)
                     @Html.Label("Price")
                 </div>
                 <div class="form-group">
-                    @Html.CheckBox("peoplecountf", Model.SearchInfo.PeopleFilter)
+                    @Html.CheckBox(nameof(Model.SearchInfo.PeopleFilter), Model.SearchInfo.PeopleFilter)
                     @Html.Label("People count")
                 </div>
                 <div class="form-group">
-                    @Html.CheckBox("classf", Model.SearchInfo.RoomClassFilter)
+                    @Html.CheckBox(nameof(Model.SearchInfo.RoomClassFilter), Model.SearchInfo.RoomClassFilter)
                     @Html.Label("Room class")
                 </div>
                 <div class="form-group">
-                    @Html.CheckBox("statusf", Model.SearchInfo.StatusFilter)
+                    @Html.CheckBox(nameof(Model.SearchInfo.StatusFilter), Model.SearchInfo.StatusFilter)
                     @Html.Label("Room status")
                 </div>
             </div>

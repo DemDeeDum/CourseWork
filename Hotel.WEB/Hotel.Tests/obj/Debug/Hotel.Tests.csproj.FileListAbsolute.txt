@@ -83,3 +83,7 @@ C:\Users\dmytr\OneDrive\Документы\GitHub\FinalTask\Hotel.WEB\Hotel.Test
 C:\Users\dmytr\OneDrive\Документы\GitHub\FinalTask\Hotel.WEB\Hotel.Tests\obj\Debug\Hotel.Tests.csproj.CopyComplete
 C:\Users\dmytr\OneDrive\Документы\GitHub\FinalTask\Hotel.WEB\Hotel.Tests\obj\Debug\Hotel.Tests.dll
 C:\Users\dmytr\OneDrive\Документы\GitHub\FinalTask\Hotel.WEB\Hotel.Tests\obj\Debug\Hotel.Tests.pdb
+C:\Projects\CourseWork\Hotel.WEB\Hotel.Tests\obj\Debug\Hotel.Tests.csprojAssemblyReference.cache
+C:\Projects\CourseWork\Hotel.WEB\Hotel.Tests\obj\Debug\Hotel.Tests.csproj.CoreCompileInputs.cache
+C:\Projects\CourseWork\Hotel.WEB\Hotel.Tests\obj\Debug\Hotel.Tests.dll
+C:\Projects\CourseWork\Hotel.WEB\Hotel.Tests\obj\Debug\Hotel.Tests.pdb

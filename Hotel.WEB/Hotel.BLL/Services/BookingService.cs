@@ -54,8 +54,6 @@ namespace Hotel.BLL.Services
                 .Select(BLLService.BLLMapper.RoomMap).OrderBy(x => x.Number);
         }
 
-   
-
         public IEnumerable<RoomDTO> GetRoomRange(int StartPosition
            , int FinishPosition, OrderCreator order)
         {
@@ -151,6 +149,8 @@ namespace Hotel.BLL.Services
                 });
             else //else create booking
                 CreateBooking(userId, list[0].Id, start, finish, false);
+
+            db.Commit();
         }
 
         public void CreateBooking(string userId, int roomId, DateTime start, DateTime finish,

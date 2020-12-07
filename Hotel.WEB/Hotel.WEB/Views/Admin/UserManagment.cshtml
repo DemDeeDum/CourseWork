@@ -86,23 +86,21 @@
                         <div class="col-1">
                             <img src="~/Content/images/user-img.png" class="user-img" alt="icon" />
                         </div>
-                        <div class="col-3 pt-1 text-left">
+                        <div class="col-4 pt-1 text-left user-management-list-field">
                             @Model.Admins[i].UserName
                         </div>
-                        <div class="col-3 pt-1">
+                        <div class="col-4 pt-1 user-management-list-field">
                             @Model.Admins[i].Email
-                        </div>
-                        <div>
                         </div>
                         @if (User.Identity.Name == Model.Admins[i].UserName)
                         {
-                            <div class="col-2 pt-1 green-text text-right">
+                            <div class="col-3 pt-1 green-text text-right">
                                 YOU
                             </div>
                         }
                         else
                         {
-                    <div class="col-3">
+                    <div class="col-3 text-right">
                         <a href=@($"/Admin/DeleteFromAdmin/?name={Model.Admins[i].UserName}")>Downgrade</a>
                     </div>
                         }

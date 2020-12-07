@@ -65,19 +65,22 @@ namespace Hotel.BLL.Services
         public IEnumerable<RoomDTO> GetRooms(int number, string className
             , int peopleCount, bool inAccessible)
         {
-            if (number != 0)
-                return db.Rooms.GetAll().Where(x => x.Number == number)
-                    .Select(BLLService.BLLMapper.RoomMap);
-
             IEnumerable<Room> list = db.Rooms.GetAll().OrderBy(x => x.Number).ToList();
-            if (className != null && className != "")
-                list = list.Where(x => x.RoomClass.Name == className);
+            if (number != 0)
+            {
+                list = list.Where(x => x.Number == number);
+            }
+            else
+            {
+                if (className != null && className != "")
+                    list = list.Where(x => x.RoomClass.Name == className);
 
-            if (peopleCount != 0)
-                list = list.Where(x => x.PeopleCount == peopleCount);
+                if (peopleCount != 0)
+                    list = list.Where(x => x.PeopleCount == peopleCount);
 
-            if (inAccessible)
-                list = list.Where(x => !x.IsAccessible);
+                if (inAccessible)
+                    list = list.Where(x => !x.IsAccessible);
+            }
 
             var result = new List<RoomDTO>();
             foreach(var room in list)
@@ -96,7 +99,14 @@ namespace Hotel.BLL.Services
             var room = db.Rooms.Get(id);
             if (room is null)
                 return null;
-            return BLLService.BLLMapper.RoomMap(room);
+
+            var roomDto = BLLService.BLLMapper.RoomMap(room);
+            if(!room.IsAccessible)
+            {
+                roomDto.AppartmentStatus = RoomStatus.INACCESSIBLE;
+            }
+
+            return roomDto;
         }
 
         public OperationMessage ChangeRoom(RoomDTO roomDTO)
